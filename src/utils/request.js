@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
@@ -7,12 +8,21 @@ const service = axios.create({
 })
 
 // 请求拦截器
-service.interceptors.request.use((config) => {
-  // 添加 icode
-  config.headers.icode = '003AB698C6E0825C'
-  // 必须返回 config
-  return config
-})
+service.interceptors.request.use(
+  (config) => {
+    // 添加 icode
+    config.headers.icode = '003AB698C6E0825C'
+    // 添加token
+    if (store.getters.token) {
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
+    // 必须返回 config
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 // 响应拦截器
 // 1.情况一：请求成功业务成功
