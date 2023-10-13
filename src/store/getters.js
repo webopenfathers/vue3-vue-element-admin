@@ -10,8 +10,12 @@ const getters = {
   hasUserInfo: (state) => {
     return JSON.stringify(state.user.userInfo) !== '{}'
   },
+  // 用户信息
   userInfo: (state) => state.user.userInfo,
-  cssVar: (state) => variables
+  // css 变量
+  cssVar: (state) => variables,
+  // sidebar 开关
+  sidebarOpened: (state) => state.app.sidebarOpened
 }
 
 export default getters

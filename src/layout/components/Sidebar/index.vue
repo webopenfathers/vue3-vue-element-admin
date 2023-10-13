@@ -2,7 +2,7 @@
   <div>
     <h1>占位</h1>
     <el-scrollbar>
-      <sidebar-menu>s</sidebar-menu>
+      <sidebar-menu></sidebar-menu>
     </el-scrollbar>
   </div>
 </template>
