@@ -47,7 +47,7 @@ console.log(variables)
   z-index: 9;
   // 导入 variables
   width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
+  transition: width #{$sideBarDuration};
 }
 
 .hideSidebar .fixed-header {
