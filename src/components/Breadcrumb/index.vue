@@ -9,7 +9,30 @@
   </el-breadcrumb>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+// 生成数组数据
+const breadcrumData = ref([])
+console.log(breadcrumData)
+const getBreadcrumData = () => {
+  // 当前路由的标准化路由记录
+  breadcrumData.value = route.matched.filter(
+    (item) => item.meta && item.meta.title
+  )
+}
+
+// wath 监听路有变化
+const route = useRoute()
+watch(
+  route,
+  () => {
+    getBreadcrumData()
+  },
+  { immediate: true }
+)
+</script>
 
 <style lang="scss" scoped>
 .breadcrumb {
