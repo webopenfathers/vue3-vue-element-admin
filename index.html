@@ -1,0 +1,31 @@
+<script>
+  // 我们有一个变量 msg ，但是这个 msg 有且只能有两个值：
+
+  // 1. hello world
+  // 2. 你好世界
+
+  // 要求：根据需要切换 msg 的值
+
+
+
+  // 代码实现-----------------------------------
+  // 1.定义 msg 值的数据源
+  const messages = {
+    en: {
+      msg: 'hello world'
+    },
+    zh: {
+      msg: '你好世界'
+    }
+  }
+  // 2.定义切换语言的变量
+  let locale = 'zh'
+  // 3.定义赋值函数(参数为语言变量中的key)
+  function t(key) {
+    return messages[locale][key]
+  }
+  // 4.为 msg 赋值
+  let msg = t('msg')
+  console.log(msg);
+
+</script>
