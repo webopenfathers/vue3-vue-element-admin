@@ -1,17 +1,22 @@
 <template>
   <el-breadcrumb class="breadcrumb" separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-    <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-    <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-    <el-breadcrumb-item>
-      <span class="no-redirect">活动详情</span>
+    <el-breadcrumb-item v-for="(item, index) in breadcrumData" :key="item.path">
+      <!-- 不可点击项 -->
+      <span class="no-redirect" v-if="index === breadcrumData.length - 1">{{
+        item.meta.title
+      }}</span>
+      <!-- 可点击项 -->
+      <span class="redirect" v-else @click="onLinkClick(item)">{{
+        item.meta.title
+      }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 // 生成数组数据
 const breadcrumData = ref([])
@@ -32,6 +37,16 @@ watch(
   },
   { immediate: true }
 )
+
+// 跳转点击事件
+const router = useRouter()
+const onLinkClick = (item) => {
+  router.push(item.path)
+}
+
+// 将来需要主题替换,所以 hover 的颜色设置为项目的主色
+const store = useStore()
+const linkHover = ref(store.getters.cssVar.menuBg)
 </script>
 
 <style lang="scss" scoped>
@@ -40,6 +55,16 @@ watch(
   font-size: 14px;
   line-height: 50px;
   margin-left: 8px;
+
+  .redirect {
+    color: #666;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+      color: v-bind(linkHover);
+    }
+  }
+
   ::v-deep .no-redirect {
     color: #97a8be;
     cursor: text;
