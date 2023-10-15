@@ -17,7 +17,9 @@ const getters = {
   // sidebar 开关
   sidebarOpened: (state) => state.app.sidebarOpened,
   // 国际化
-  language: (state) => state.app.language
+  language: (state) => state.app.language,
+  // 主题色
+  mainColor: (state) => state.theme.mainColor
 }
 
 export default getters

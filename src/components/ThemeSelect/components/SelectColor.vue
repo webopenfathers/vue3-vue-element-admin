@@ -1,7 +1,7 @@
 <template>
   <el-dialog
-    :title="$('msg.universal.title')"
-    :model-value="modelValue"
+    :title="$t('msg.universal.title')"
+    :model-value="visible"
     @close="closed"
     width="22%"
   >
@@ -23,14 +23,17 @@
 
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue'
+import { useStore } from 'vuex'
 defineProps({
-  modelValue: {
+  visible: {
     type: Boolean,
     required: true
   }
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:visible'])
+
+const store = useStore()
 
 // 预定义色值
 const predefineColors = [
@@ -51,15 +54,24 @@ const predefineColors = [
 ]
 
 // 默认色值
-const mColor = ref('#00ff00')
+const mColor = ref(store.getters.mainColor)
 
 const closed = () => {
-  emits('update:modelValue', false)
+  emits('update:visible', false)
 }
 
+// 确定按钮点击事件
 const confirm = () => {
+  store.commit('theme/setMainColor', mColor.value)
   closed()
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.content {
+  text-align: center;
+  .title {
+    margin-bottom: 12px;
+  }
+}
+</style>

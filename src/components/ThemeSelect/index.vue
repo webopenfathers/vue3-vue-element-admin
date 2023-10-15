@@ -21,11 +21,20 @@
     </template>
   </el-dropdown>
   <!-- 弹出层 -->
-  <div></div>
+  <div>
+    <SelectColor v-model:visible="selectColorVisible" />
+  </div>
 </template>
 
 <script setup>
-const handleSetTheme = () => {}
+import { ref } from 'vue'
+import SelectColor from './components/SelectColor.vue'
+
+// dialog
+const selectColorVisible = ref(false)
+const handleSetTheme = (command) => {
+  selectColorVisible.value = true
+}
 </script>
 
 <style></style>
