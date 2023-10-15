@@ -7,8 +7,11 @@ import axios from 'axios'
  * 把生成的样式表写入到 style 中
  */
 export const writeNewStyle = (newStyle) => {
+  // 创建 style 标签
   const style = document.createElement('style')
+  // 将新的样式 写入 style 标签中间
   style.innerText = newStyle
+  // 将style标签 追加到 head 头中
   document.head.appendChild(style)
 }
 
