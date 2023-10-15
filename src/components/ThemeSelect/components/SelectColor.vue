@@ -24,6 +24,7 @@
 <script setup>
 import { defineProps, defineEmits, ref } from 'vue'
 import { useStore } from 'vuex'
+import { generateNewStyle, writeNewStyle } from '@/utils/theme'
 defineProps({
   visible: {
     type: Boolean,
@@ -61,7 +62,11 @@ const closed = () => {
 }
 
 // 确定按钮点击事件
-const confirm = () => {
+const confirm = async () => {
+  // 获取到新的样式表
+  const newStyle = await generateNewStyle(mColor.value)
+  // 将新的样式表写到head头中
+  writeNewStyle(newStyle)
   store.commit('theme/setMainColor', mColor.value)
   closed()
 }
