@@ -35,7 +35,8 @@ export const generateNewStyle = async (primaryColor) => {
 }
 /**
  * 根据主色生成新色值表
- * formula例: "light-5": "color(primary tint(50%))"
+ * formula例: { "light-5": "color(primary tint(50%))" }
+ * colors例: { light-5:"#c8f7c8" }
  */
 export const generateColor = (primary) => {
   if (!primary) return
@@ -48,7 +49,6 @@ export const generateColor = (primary) => {
     // 生成16进制的色值
     colors[key] = '#' + rgbHex(color.convert(value))
   })
-
   return colors
 }
 
