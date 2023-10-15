@@ -1,4 +1,6 @@
-import variables from '@/styles/variables.module.scss'
+import { getItem } from '@/utils/storage'
+import { MAIN_COLOR } from '@/constant'
+import { generateColor } from '@/utils/theme'
 
 // 快捷访问
 const getters = {
@@ -13,7 +15,10 @@ const getters = {
   // 用户信息
   userInfo: (state) => state.user.userInfo,
   // css 变量
-  cssVar: (state) => variables,
+  cssVar: (state) => ({
+    ...state.theme.variables,
+    ...generateColor(getItem(MAIN_COLOR))
+  }),
   // sidebar 开关
   sidebarOpened: (state) => state.app.sidebarOpened,
   // 国际化

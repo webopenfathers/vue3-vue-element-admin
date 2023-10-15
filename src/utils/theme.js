@@ -34,7 +34,8 @@ export const generateNewStyle = async (primaryColor) => {
   return cssText
 }
 /**
- * 根据主色生成色值表
+ * 根据主色生成新色值表
+ * formula例: "light-5": "color(primary tint(50%))"
  */
 export const generateColor = (primary) => {
   if (!primary) return

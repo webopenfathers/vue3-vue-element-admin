@@ -38,5 +38,10 @@ const logoHeightCssVar = computed(() => logoHeight.value + 'px')
     font-size: 16px;
     white-space: nowrap;
   }
+
+  .el-avatar {
+    // 去掉avatar组件的背景色
+    --el-avatar-background-color: none;
+  }
 }
 </style>
