@@ -5,6 +5,8 @@
     <!-- 面包屑 -->
     <Breadcrumb class="breadcrumb-container" />
     <div class="right-menu">
+      <!-- 动态换肤 -->
+      <ThemeSelect class="right-menu-item hover-effect" />
       <!-- 国际化 -->
       <LangSelect class="right-menu-item hover-effect" />
       <!-- 头像 -->
@@ -40,6 +42,7 @@ import { useStore } from 'vuex'
 import Hamburger from '@/components/hamburger/index.vue'
 import Breadcrumb from '@/components/Breadcrumb'
 import LangSelect from '@/components/LangSelect'
+import ThemeSelect from '@/components/ThemeSelect'
 
 const store = useStore()
 const logout = () => {
