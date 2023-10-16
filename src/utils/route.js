@@ -4,6 +4,7 @@ import path from 'path-browserify'
  * 所有的子集路由
  */
 const getChildrenRoutes = (routes) => {
+  console.log(routes, '最初')
   const result = []
   routes.forEach((route) => {
     if (route.children && route.children.length > 0) {
@@ -19,6 +20,7 @@ const getChildrenRoutes = (routes) => {
 export const filterRoutes = (routes) => {
   // 所有的子集路由
   const childrenRoutes = getChildrenRoutes(routes)
+  console.log(childrenRoutes, 'getChildrenRoutes所有的子集路由')
   // 根据子集路由进行查重操作
   return routes.filter((route) => {
     // 根据 route 在 childrenRoutes 中进行查重，把所有重复的路由表剔除

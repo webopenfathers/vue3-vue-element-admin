@@ -25,6 +25,7 @@ const router = useRouter()
 
 const routes = computed(() => {
   const fRoutes = filterRoutes(router.getRoutes())
+  console.log(fRoutes, 'filterRoutes')
   return generateMenus(fRoutes)
 })
 
@@ -35,7 +36,7 @@ const activeMenu = computed(() => {
   return path
 })
 
-console.log(routes.value)
+console.log(routes.value, '最终渲染菜单')
 </script>
 
 <style lang="scss" scoped></style>

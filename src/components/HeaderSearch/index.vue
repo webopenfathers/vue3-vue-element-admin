@@ -25,7 +25,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { filterRoutes, generateMenus } from '@/utils/route'
+import { useRouter } from 'vue-router'
+
+// 数据源
+const router = useRouter()
+// searchPool其实也就是菜单数据
+const searchPool = computed(() => {
+  const fRoutes = filterRoutes(router.getRoutes())
+  return generateMenus(fRoutes)
+})
+console.log(searchPool.value)
 
 // 控制 search 展示
 const isShow = ref(false)
