@@ -26,18 +26,19 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { filterRoutes, generateMenus } from '@/utils/route'
+import { filterRoutes } from '@/utils/route'
+import { generateRoutes } from './FuseData'
 import { useRouter } from 'vue-router'
 import Fuse from 'fuse.js'
 
 // 数据源
 const router = useRouter()
-// searchPool其实也就是菜单数据
 const searchPool = computed(() => {
   const fRoutes = filterRoutes(router.getRoutes())
-  return generateMenus(fRoutes)
+  return generateRoutes(fRoutes)
 })
 
+console.log(searchPool.value)
 // 搜索库相关
 // 参数一:数据源searchPool
 // 参数二:配置对象
@@ -71,9 +72,10 @@ const onShowClick = () => {
 // search 相关
 const search = ref('')
 // 搜索方法
-const querySearch = () => {
-  console.log('querySearch')
+const querySearch = (query) => {
+  console.log(fuse.search(query), 'querySearch')
 }
+
 // 选中回调
 const onSelectChange = () => {
   console.log('onSelectChange')
