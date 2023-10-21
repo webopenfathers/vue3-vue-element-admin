@@ -31,7 +31,7 @@
 
 <script setup>
 import ContextMenu from './ContextMenu.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -71,6 +71,18 @@ const openMenu = (e, index) => {
   selectIndex.value = index
   visible.value = true
 }
+
+const closeMenu = () => {
+  visible.value = false
+}
+
+watch(visible, (val) => {
+  if (val) {
+    document.body.addEventListener('click', closeMenu)
+  } else {
+    document.body.removeEventListener('click', closeMenu)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
