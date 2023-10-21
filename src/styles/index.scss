@@ -55,3 +55,13 @@ div:focus {
     height: 0;
   }
 }
+
+// 处理driver组件空白覆盖的问题
+#driver-highlighted-element-stage {
+  background: transparent !important;
+  outline: 5000px solid rgba(0, 0, 0, 0.75);
+}
+
+#driver-page-overlay {
+  background: none !important;
+}
