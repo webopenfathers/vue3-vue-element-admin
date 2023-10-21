@@ -11,6 +11,7 @@
         backgroundColor: isActive(tag) ? $store.getters.cssVar.menuBg : '',
         borderColor: isActive(tag) ? $store.getters.cssVar.menuBg : ''
       }"
+      @contextmenu.prevent="openMenu($event, index)"
     >
       {{ tag.title }}
       <i
@@ -19,10 +20,18 @@
         @click.prevent.stop="onCloseClick(index)"
       ></i>
     </router-link>
+    <!-- 右击菜单 -->
+    <context-menu
+      v-show="visible"
+      :style="menuStyle"
+      :index="selectIndex"
+    ></context-menu>
   </div>
 </template>
 
 <script setup>
+import ContextMenu from './ContextMenu.vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 /**
@@ -37,6 +46,24 @@ const isActive = (tag) => {
  * 关闭tag事件
  */
 const onCloseClick = () => {}
+
+/**
+ * 鼠标右键
+ */
+const visible = ref(false)
+const menuStyle = ref({
+  left: 0,
+  top: 0
+})
+const selectIndex = ref(0)
+const openMenu = (e, index) => {
+  // 鼠标点击位置
+  const { x, y } = e
+  menuStyle.value.left = x + 'px'
+  menuStyle.value.top = y + 'px'
+  selectIndex.value = index
+  visible.value = true
+}
 </script>
 
 <style lang="scss" scoped>
