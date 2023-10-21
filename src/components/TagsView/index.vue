@@ -33,6 +33,7 @@
 import ContextMenu from './ContextMenu.vue'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 
 /**
  * 是否被选中
@@ -45,7 +46,13 @@ const isActive = (tag) => {
 /**
  * 关闭tag事件
  */
-const onCloseClick = () => {}
+const store = useStore()
+const onCloseClick = (index) => {
+  store.commit('app/removeTagsView', {
+    type: 'index',
+    index
+  })
+}
 
 /**
  * 鼠标右键
