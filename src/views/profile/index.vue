@@ -3,7 +3,10 @@
     <el-row>
       <!-- 左侧 -->
       <el-col :span="6">
-        <project-card class="project-card"></project-card>
+        <project-card
+          class="project-card"
+          :features="featureData"
+        ></project-card>
       </el-col>
       <!-- 右侧 -->
       <el-col :span="18">
@@ -31,8 +34,16 @@ import Author from './components/Author.vue'
 import Chapter from './components/Chapter.vue'
 import Feature from './components/Feature.vue'
 import ProjectCard from './components/ProjectCard.vue'
+import { feature } from '@/api/user'
 
 const activeName = ref('feature')
+
+const featureData = ref([])
+const getFeatureData = async () => {
+  featureData.value = await feature()
+}
+
+getFeatureData()
 </script>
 
 <style lang="scss" scoped>
