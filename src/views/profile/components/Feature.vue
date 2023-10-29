@@ -1,4 +1,5 @@
 <template>
+  <!-- 功能 -->
   <el-collapse v-model="activeName" accordion>
     <el-collapse-item
       v-for="item in features"
