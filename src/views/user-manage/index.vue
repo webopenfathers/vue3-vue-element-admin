@@ -32,10 +32,51 @@
           </template>
         </el-table-column>
         <!-- 角色 -->
+        <el-table-column :label="$t('msg.excel.role')">
+          <template #default="{ row }">
+            <div v-if="row.role && row.role.length">
+              <el-tag v-for="item in row.role" :key="item.id" size="mini">
+                {{ item.title }}</el-tag
+              >
+            </div>
+            <div v-else>
+              <el-tag size="mini">{{ $t('msg.excel.defaultRole') }}</el-tag>
+            </div>
+          </template>
+        </el-table-column>
         <!-- 时间 -->
+        <el-table-column prop="openTime" :label="$t('msg.excel.openTime')">
+        </el-table-column>
         <!-- 操作 -->
+        <el-table-column
+          :label="$t('msg.excel.action')"
+          fixed="right"
+          width="300"
+        >
+          <template #default>
+            <el-button type="primary" size="mini">{{
+              $t('msg.excel.show')
+            }}</el-button>
+            <el-button type="info" size="mini">{{
+              $t('msg.excel.showRole')
+            }}</el-button>
+            <el-button type="danger" size="mini">{{
+              $t('msg.excel.remove')
+            }}</el-button>
+          </template>
+        </el-table-column>
       </el-table>
-      <el-pagination></el-pagination>
+      <!-- 分页 -->
+      <el-pagination
+        class="pagination"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="page"
+        :page-size="size"
+        :page-sizes="[2, 5, 10, 20]"
+        layout="total,sizes,prev,next,jumper"
+        :total="total"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -63,6 +104,30 @@ const getListData = async () => {
 
 getListData()
 watchSwitchLang(getListData)
+
+const handleSizeChange = () => {}
+const handleCurrentChange = () => {}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.user-manage-container {
+  .header {
+    margin-bottom: 22px;
+    text-align: right;
+  }
+  ::v-deep .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+
+  ::v-deep .el-tag {
+    margin-right: 6px;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+}
+</style>
