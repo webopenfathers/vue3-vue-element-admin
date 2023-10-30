@@ -45,7 +45,10 @@
           </template>
         </el-table-column>
         <!-- 时间 -->
-        <el-table-column prop="openTime" :label="$t('msg.excel.openTime')">
+        <el-table-column :label="$t('msg.excel.openTime')">
+          <template #default="{ row }">
+            {{ $filters.dateFilter(row.openTime) }}
+          </template>
         </el-table-column>
         <!-- 操作 -->
         <el-table-column
@@ -74,7 +77,7 @@
         :current-page="page"
         :page-size="size"
         :page-sizes="[2, 5, 10, 20]"
-        layout="total,sizes,prev,next,jumper"
+        layout="total,sizes,prev,pager,next,jumper"
         :total="total"
       ></el-pagination>
     </el-card>
