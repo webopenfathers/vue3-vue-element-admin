@@ -28,13 +28,91 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { defineProps, ref } from 'vue'
+import XLSX from 'xlsx'
+import { getHeaderRow } from './utils'
+
+const props = defineProps({
+  // 上传之前的回调
+  beforeUpload: Function,
+  // 上传成功的回调
+  onSuccess: Function
+})
+
+// 点击上传触发
 const loading = ref(false)
 const excelUploadInput = ref(null)
+const handleUpload = () => {
+  // 触发隐藏域的点击事件
+  excelUploadInput.value.click()
+}
 
-const handleUpload = () => {}
+// 选择文件后出发
+const handleChange = (e) => {
+  const files = e.target.files
 
-const handleChange = () => {}
+  // 单个上传，取第一个
+  const rawFile = files[0]
+  if (!rawFile) return
+  console.log(rawFile)
+  upload(rawFile)
+}
+
+/**
+ * 触发上传事件
+ */
+const upload = (rawFile) => {
+  excelUploadInput.value.value = null
+  // 如果用户没有指定上传前回调---直接解析并return
+  if (!props.beforeUpload) {
+    readerData(rawFile)
+    return
+  }
+  // 如果用户指定了上传前回调，那么只有返回 true 的时候，才会执行对应的后续操作
+  const before = props.beforeUpload(rawFile)
+  if (before) {
+    readerData(rawFile)
+  }
+}
+
+/**
+ * 读取数据(异步)
+ */
+const readerData = (rawFile) => {
+  loading.value = true
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    // 读取操作完成时触发
+    reader.onloade = (e) => {
+      // 1.获取到解析后的数据
+      const data = e.target.result
+      // 2.利用 XLSX 对数据进行解析
+      const workbook = XLSX.read(data, { type: 'array' })
+      // 3.获取第一张表格(工作薄)名称
+      const firstSheetName = workbook.SheetNames[0]
+      // 4.读取 sheet1 (第一张表格) 的数据
+      const workSheet = workbook.Sheets[firstSheetName]
+      // 5.解析数据的表头
+      const header = getHeaderRow(workSheet)
+      // 6.解析数据体
+      const results = XLSX.utils.sheet_to_json(workSheet)
+      // 7.传入解析之后的数据
+      generateData({ header, results })
+      // 8.处理 loading
+      loading.value = false
+      // 9.成功回调
+      resolve()
+    }
+
+    reader.readAsArrayBuffer(rawFile)
+  })
+}
+
+// 根据导入内容生成数据
+const generateData = (excelData) => {
+  props.onSuccess && props.onSuccess(excelData)
+}
 </script>
 
 <style lang="scss" scoped>
