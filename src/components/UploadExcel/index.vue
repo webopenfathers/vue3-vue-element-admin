@@ -28,9 +28,10 @@
 </template>
 
 <script setup>
+import { ElMessage } from 'element-plus'
 import { defineProps, ref } from 'vue'
 import XLSX from 'xlsx'
-import { getHeaderRow } from './utils'
+import { getHeaderRow, isExel } from './utils'
 
 const props = defineProps({
   // 上传之前的回调
@@ -56,6 +57,25 @@ const handleChange = (e) => {
   if (!rawFile) return
   console.log(rawFile)
   upload(rawFile)
+}
+
+// 拖拽上传
+const handleDrop = (e) => {
+  // 上传中--return
+  if (loading.value) return true
+  const files = e.dataTransfer.files
+  if (files.length !== 1) return ElMessage.error('只要要有一个文件')
+
+  const rawFile = files[0]
+  if (!isExel(rawFile)) {
+    return ElMessage.error('文件必须是 .xlsx,.xls,.csv 格式')
+  }
+
+  upload(rawFile)
+}
+
+const handleDragover = (e) => {
+  e.dataTransfer.dropEffect = 'copy'
 }
 
 /**
