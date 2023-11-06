@@ -84,7 +84,7 @@ const readerData = (rawFile) => {
     const reader = new FileReader()
 
     // 读取操作完成时触发
-    reader.onloade = (e) => {
+    reader.onload = (e) => {
       // 1.获取到解析后的数据
       const data = e.target.result
       // 2.利用 XLSX 对数据进行解析
