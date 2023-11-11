@@ -13,7 +13,11 @@ export function watchSwitchLang(...cbs) {
   watch(
     () => store.getters.language,
     () => {
+      console.log('我变化了')
       cbs.forEach((cb) => cb(store.getters.language))
+    },
+    {
+      immediate: true
     }
   )
 }
