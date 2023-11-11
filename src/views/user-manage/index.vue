@@ -10,7 +10,7 @@
     </el-card>
     <!-- table -->
     <el-card>
-      <el-table :data="tableData" border style="width: 100%">
+      <el-table :data="tableData" border style="width: 100%" min-height="250">
         <!-- 索引 -->
         <el-table-column label="#" type="index"></el-table-column>
         <!-- 姓名 -->
@@ -58,14 +58,14 @@
           fixed="right"
           width="300"
         >
-          <template #default>
+          <template #default="{ row }">
             <el-button type="primary" size="mini">{{
               $t('msg.excel.show')
             }}</el-button>
             <el-button type="info" size="mini">{{
               $t('msg.excel.showRole')
             }}</el-button>
-            <el-button type="danger" size="mini">{{
+            <el-button type="danger" size="mini" @click="onRemoveClick(row)">{{
               $t('msg.excel.remove')
             }}</el-button>
           </template>
@@ -87,10 +87,12 @@
 </template>
 
 <script setup>
-import { getUserManageList } from '@/api/user-manage'
+import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { ref, onActivated } from 'vue'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 // 数据相关
 const tableData = ref([])
@@ -118,6 +120,23 @@ onActivated(getListData)
 const handleSizeChange = (currentSize) => {
   size.value = currentSize
   getListData()
+}
+
+// 删除用户
+const i18n = useI18n()
+const onRemoveClick = (row) => {
+  ElMessageBox.confirm(
+    i18n.t('msg.excel.dialogTitle1') +
+      row.username +
+      i18n.t('msg.excel.dialogTitle2'),
+    {
+      type: 'warning'
+    }
+  ).then(async () => {
+    await deleteUser(row._id)
+    ElMessage.success(i18n.t('msg.excel.removeSuccess'))
+    getListData()
+  })
 }
 
 // 切换页数页码
