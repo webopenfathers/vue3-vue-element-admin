@@ -11,6 +11,15 @@ export const getUserManageList = (params) => {
 }
 
 /**
+ * 获取所有用户列表的数据
+ */
+export const getUserManageAllList = () => {
+  return request({
+    url: '/user-manage/all-list'
+  })
+}
+
+/**
  * 批量上传
  */
 export const userBatchImport = (data) => {
