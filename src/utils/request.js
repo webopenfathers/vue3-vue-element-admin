@@ -12,7 +12,7 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 添加 icode
-    config.headers.icode = '003AB698C6E0825C'
+    config.headers.icode = 'F663C0127869D005'
     // 添加token
     if (store.getters.token) {
       if (isCheckTimeout()) {
