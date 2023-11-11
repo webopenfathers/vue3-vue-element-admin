@@ -88,7 +88,7 @@
 
 <script setup>
 import { getUserManageList } from '@/api/user-manage'
-import { ref } from 'vue'
+import { ref, onActivated } from 'vue'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
 
@@ -111,8 +111,20 @@ const getListData = async () => {
 getListData()
 watchSwitchLang(getListData)
 
-const handleSizeChange = () => {}
-const handleCurrentChange = () => {}
+// 处理缓存组件调用
+onActivated(getListData)
+
+// 切换每页显示条数
+const handleSizeChange = (currentSize) => {
+  size.value = currentSize
+  getListData()
+}
+
+// 切换页数页码
+const handleCurrentChange = (currentPage) => {
+  page.value = currentPage
+  getListData()
+}
 
 // excel 导入按钮点击事件
 const router = useRouter()
