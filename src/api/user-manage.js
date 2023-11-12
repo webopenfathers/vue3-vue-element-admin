@@ -20,6 +20,15 @@ export const getUserManageAllList = () => {
 }
 
 /**
+ * 获取用户详情
+ */
+export const getUserDetail = (id) => {
+  return request({
+    url: `/user-manage/detail/${id}`
+  })
+}
+
+/**
  * 批量上传
  */
 export const userBatchImport = (data) => {

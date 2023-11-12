@@ -56,6 +56,8 @@ const privateRoutes = [
         path: '/user/info/:id',
         name: 'userInfo',
         component: () => import('@/views/user-info/index.vue'),
+        // 将props传递给路由组件
+        props: true,
         meta: {
           title: 'userInfo'
         }
