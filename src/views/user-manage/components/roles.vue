@@ -23,7 +23,9 @@
 import { defineProps, defineEmits, ref, watch } from 'vue'
 import { roleList } from '@/api/role'
 import { watchSwitchLang } from '@/utils/i18n'
-import { userRoles } from '@/api/user-manage'
+import { userRoles, updateRoles } from '@/api/user-manage'
+import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   modelValue: {
@@ -36,9 +38,23 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'updateRole'])
 
-const onConfirm = () => {}
+const i18n = useI18n()
+const onConfirm = async () => {
+  const roles = userRoleTitleList.value.map((title) => {
+    return allRoleList.value.find((role) => role.title === title)
+  })
+
+  await updateRoles(props.userId, roles)
+
+  ElMessage.success(i18n.t('msg.role.updateRoleSuccess'))
+
+  // 角色更新成功
+  emits('updateRole')
+
+  closed()
+}
 
 const closed = () => {
   emits('update:modelValue', false)

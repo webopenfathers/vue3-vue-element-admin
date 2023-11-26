@@ -93,6 +93,7 @@
     <roles-dialog
       v-model="roleDialogVisible"
       :user-id="selectUserId"
+      @updateRole="getListData"
     ></roles-dialog>
   </div>
 </template>
