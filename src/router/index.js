@@ -1,6 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import layout from '@/layout/index.vue'
 
+// 分别对应5个页面
+import UserManage from './modules/UserManage'
+import RoleList from './modules/RoleList'
+import PermissionList from './modules/PermissionList'
+import Article from './modules/Article'
+import ArticleCreate from './modules/ArticleCreate'
+
 /**
  * 定义 路由表 对应 menu 菜单规则
  * 对于单个路由规则而言（循环）：
@@ -14,115 +21,19 @@ import layout from '@/layout/index.vue'
 /**
  * 私有路由表
  */
-const privateRoutes = [
-  // user相关
-  {
-    path: '/user',
-    redirect: '/user/manage',
-    component: layout,
-    meta: {
-      title: 'user',
-      icon: 'personnel'
-    },
-    children: [
-      {
-        path: '/user/manage',
-        name: 'userManage',
-        component: () => import('@/views/user-manage/index.vue'),
-        meta: {
-          title: 'userManage',
-          icon: 'personnel-manage'
-        }
-      },
-      {
-        path: '/user/role',
-        name: 'userRole',
-        component: () => import('@/views/role-list/index.vue'),
-        meta: {
-          title: 'roleList',
-          icon: 'role'
-        }
-      },
-      {
-        path: '/user/permission',
-        name: 'userPermission',
-        component: () => import('@/views/permission-list/index.vue'),
-        meta: {
-          title: 'permissionList',
-          icon: 'permission'
-        }
-      },
-      {
-        path: '/user/info/:id',
-        name: 'userInfo',
-        component: () => import('@/views/user-info/index.vue'),
-        // 将props传递给路由组件
-        props: true,
-        meta: {
-          title: 'userInfo'
-        }
-      },
-      {
-        path: '/user/import',
-        name: 'import',
-        component: () => import('@/views/import/index.vue'),
-        meta: {
-          title: 'excelImport'
-        }
-      }
-    ]
-  },
-  // article相关
-  {
-    path: '/article',
-    component: layout,
-    redirect: '/article/ranking',
-    meta: {
-      title: 'article',
-      icon: 'article'
-    },
-    children: [
-      {
-        path: '/article/ranking',
-        name: 'articleRanking',
-        component: () => import('@/views/article-ranking/index'),
-        meta: {
-          title: 'articleRanking',
-          icon: 'article-ranking'
-        }
-      },
-      {
-        path: '/article/:id',
-        name: 'articleDetail',
-        component: () => import('@/views/article-detail/index'),
-        meta: {
-          title: 'articleDetail'
-        }
-      },
-      {
-        path: '/article/create',
-        name: 'articleCreate',
-        component: () => import('@/views/article-create/index'),
-        meta: {
-          title: 'articleCreate',
-          icon: 'article-create'
-        }
-      },
-      {
-        path: '/article/editor/:id',
-        name: 'articleEditor',
-        component: () => import('@/views/article-create/index'),
-        meta: {
-          title: 'articleEditor'
-        }
-      }
-    ]
-  }
+export const privateRoutes = [
+  UserManage,
+  RoleList,
+  PermissionList,
+  Article,
+  ArticleCreate
 ]
+
+console.log(privateRoutes)
 /**
  * 公开路由表
  */
-const publicRoutes = [
+export const publicRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue')
@@ -160,7 +71,7 @@ const publicRoutes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [...publicRoutes, ...privateRoutes]
+  routes: publicRoutes
 })
 
 export default router
