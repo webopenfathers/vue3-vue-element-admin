@@ -7,6 +7,7 @@ import RoleList from './modules/RoleList'
 import PermissionList from './modules/PermissionList'
 import Article from './modules/Article'
 import ArticleCreate from './modules/ArticleCreate'
+import store from '@/store'
 
 /**
  * 定义 路由表 对应 menu 菜单规则
@@ -73,5 +74,23 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: publicRoutes
 })
+
+/**
+ * 初始化路由表
+ */
+export function resetRouter() {
+  if (
+    store.getters.userInfo &&
+    store.getters.userInfo.permission &&
+    store.getters.userInfo.permission.menus
+  ) {
+    // menus: ["userManage","roleList",...]
+    const menus = store.getters.userInfo.permission.menus
+    console.log(menus)
+    menus.forEach((menu) => {
+      router.removeRoute(menu)
+    })
+  }
+}
 
 export default router
