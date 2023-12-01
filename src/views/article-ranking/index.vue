@@ -14,10 +14,11 @@
           :label="$t('msg.article.author')"
           prop="author"
         ></el-table-column>
-        <el-table-column
-          :label="$t('msg.article.publicDate')"
-          prop="publicDate"
-        ></el-table-column>
+        <el-table-column :label="$t('msg.article.publicDate')">
+          <template v-slot="{ row }">
+            {{ $filters.relativeTime(row.publicDate) }}
+          </template>
+        </el-table-column>
         <el-table-column
           :label="$t('msg.article.desc')"
           prop="desc"
