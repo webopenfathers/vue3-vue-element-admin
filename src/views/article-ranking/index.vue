@@ -80,7 +80,7 @@ onActivated(getListData)
 
 // 初始化sortable
 onMounted(() => {
-  initSortable()
+  initSortable(tableData, getListData)
 })
 
 // size 改变
