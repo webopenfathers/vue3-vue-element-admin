@@ -52,10 +52,12 @@
 </template>
 
 <script setup>
-import { ref, onActivated } from 'vue'
+import { ref, onActivated, onMounted } from 'vue'
 import { getArticleList } from '@/api/article'
 import { watchSwitchLang } from '@/utils/i18n'
 import { dynamicData, selectDynamicLable, tableColumns } from './dynamic/index'
+// tableRef只要导入了，js文件就可以获取到这个dom
+import { tableRef, initSortable } from './sortable'
 
 // 数据相关
 const tableData = ref([])
@@ -75,6 +77,11 @@ const getListData = async () => {
 // 国际化调用
 watchSwitchLang(getListData)
 onActivated(getListData)
+
+// 初始化sortable
+onMounted(() => {
+  initSortable()
+})
 
 // size 改变
 const handleSizeChange = (currentSize) => {
@@ -118,5 +125,12 @@ const onRemoveClick = (row) => {}
     margin-top: 20px;
     text-align: center;
   }
+}
+
+// 拖拽时的css样式
+::v-deep .sortable-ghost {
+  opacity: 0.6;
+  color: #fff;
+  background-color: #304156;
 }
 </style>
