@@ -15,8 +15,18 @@ import MKEditor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import '@toast-ui/editor/dist/i18n/zh-cn'
 import { useStore } from 'vuex'
-import { onMounted } from 'vue'
+import { onMounted, defineProps, defineEmits } from 'vue'
 import { watchSwitchLang } from '@/utils/i18n'
+import { commitArticle } from './commit'
+
+const props = defineProps({
+  title: {
+    required: true,
+    type: String
+  }
+})
+
+const emits = defineEmits(['onSuccess'])
 
 // Editor 实例
 let mkEditor
@@ -49,6 +59,16 @@ watchSwitchLang(() => {
   initEditor()
   mkEditor.setHTML(htmlStr)
 })
+
+const onSubmitClick = async () => {
+  await commitArticle({
+    title: props.title,
+    content: mkEditor.getHTML()
+  })
+
+  mkEditor.reset()
+  emits('onSuccess')
+}
 </script>
 <style scoped lang="scss">
 .markdown-container {
