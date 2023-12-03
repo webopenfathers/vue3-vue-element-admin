@@ -49,3 +49,14 @@ export const createArticle = (data) => {
     data
   })
 }
+
+/**
+ * 编辑文章
+ */
+export const editorArticle = (data) => {
+  return request({
+    url: '/article/edit',
+    method: 'POST',
+    data
+  })
+}

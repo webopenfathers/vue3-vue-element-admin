@@ -15,14 +15,17 @@ import MKEditor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import '@toast-ui/editor/dist/i18n/zh-cn'
 import { useStore } from 'vuex'
-import { onMounted, defineProps, defineEmits } from 'vue'
+import { onMounted, defineProps, defineEmits, watch } from 'vue'
 import { watchSwitchLang } from '@/utils/i18n'
-import { commitArticle } from './commit'
+import { commitArticle, editArticle } from './commit'
 
 const props = defineProps({
   title: {
     required: true,
     type: String
+  },
+  detail: {
+    type: Object
   }
 })
 
@@ -60,15 +63,41 @@ watchSwitchLang(() => {
   mkEditor.setHTML(htmlStr)
 })
 
+/**
+ * 提交
+ */
 const onSubmitClick = async () => {
-  await commitArticle({
-    title: props.title,
-    content: mkEditor.getHTML()
-  })
+  if (props.detail && props.detail._id) {
+    // 编辑
+    await editArticle({
+      id: props.detail._id,
+      title: props.title,
+      content: mkEditor.getHTML()
+    })
+  } else {
+    // 创建
+    await commitArticle({
+      title: props.title,
+      content: mkEditor.getHTML()
+    })
+  }
 
   mkEditor.reset()
   emits('onSuccess')
 }
+
+// 编辑相关
+watch(
+  () => props.detail,
+  (val) => {
+    if (val && val.content) {
+      mkEditor.setHTML(val.content)
+    }
+  },
+  {
+    immediate: true
+  }
+)
 </script>
 <style scoped lang="scss">
 .markdown-container {
