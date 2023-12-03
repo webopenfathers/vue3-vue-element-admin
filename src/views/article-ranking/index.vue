@@ -53,8 +53,10 @@
 
 <script setup>
 import { ref, onActivated, onMounted } from 'vue'
-import { getArticleList } from '@/api/article'
+import { deleteArticle, getArticleList } from '@/api/article'
 import { watchSwitchLang } from '@/utils/i18n'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 import { dynamicData, selectDynamicLable, tableColumns } from './dynamic/index'
 // tableRef只要导入了，js文件就可以获取到这个dom
 import { tableRef, initSortable } from './sortable'
@@ -99,7 +101,25 @@ const handleCurrentChange = (currentPage) => {
 const onShowClick = (row) => {}
 
 // 点击删除
-const onRemoveClick = (row) => {}
+const i18n = useI18n()
+const onRemoveClick = (row) => {
+  ElMessageBox.confirm(
+    i18n.t('msg.article.dialogTitle1') +
+      row.title +
+      i18n.t('msg.article.dialogTitle2'),
+    {
+      type: 'warning'
+    }
+  )
+    .then(async (res) => {
+      await deleteArticle(row._id)
+      ElMessage.success(i18n.t('msg.article.removeSuccess'))
+      getListData()
+    })
+    .catch((err) => {
+      return err
+    })
+}
 </script>
 
 <style lang="scss" scoped>
