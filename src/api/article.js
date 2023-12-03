@@ -29,3 +29,12 @@ export const deleteArticle = (articleId) => {
     url: `/article/delete/${articleId}`
   })
 }
+
+/**
+ * 文章详情
+ */
+export const articleDetalil = (articleId) => {
+  return request({
+    url: `/article/${articleId}`
+  })
+}

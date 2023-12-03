@@ -57,6 +57,7 @@ import { deleteArticle, getArticleList } from '@/api/article'
 import { watchSwitchLang } from '@/utils/i18n'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { dynamicData, selectDynamicLable, tableColumns } from './dynamic/index'
 // tableRef只要导入了，js文件就可以获取到这个dom
 import { tableRef, initSortable } from './sortable'
@@ -98,7 +99,10 @@ const handleCurrentChange = (currentPage) => {
 }
 
 // 点击查看
-const onShowClick = (row) => {}
+const router = useRouter()
+const onShowClick = (row) => {
+  router.push(`/article/${row._id}`)
+}
 
 // 点击删除
 const i18n = useI18n()
