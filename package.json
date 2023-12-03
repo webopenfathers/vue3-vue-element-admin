@@ -9,6 +9,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@toast-ui/editor": "^3.0.2",
     "@vueuse/core": "^10.5.0",
     "axios": "^1.5.1",
     "core-js": "^3.8.3",
