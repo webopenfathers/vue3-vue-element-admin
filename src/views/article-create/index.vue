@@ -14,7 +14,7 @@
           <Markdown :title="title" :detail="detail" @onSuccess="onSuccess" />
         </el-tab-pane>
         <el-tab-pane :label="$t('msg.article.richText')" name="editor">
-          <Editor />
+          <Editor :title="title" :detail="detail" @onSuccess="onSuccess" />
         </el-tab-pane>
       </el-tabs>
     </el-card>
