@@ -23,7 +23,8 @@
             :size="40"
             :src="$store.getters.userInfo.avatar"
           ></el-avatar>
-          <i class="el-icon-s-tools"></i>
+          <!--  -->
+          <el-icon :size="15"><Tools /></el-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
@@ -52,6 +53,7 @@ import ThemeSelect from '@/components/ThemeSelect'
 import ScreenFull from '@/components/ScreenFull'
 import HeaderSearch from '@/components/HeaderSearch'
 import Guide from '@/components/Guide'
+import { Tools } from '@element-plus/icons-vue'
 
 const store = useStore()
 const logout = () => {
