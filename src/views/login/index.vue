@@ -121,6 +121,14 @@ $dark_gray: #889aa4;
 $light_gray: #eee;
 $cursor: #fff;
 
+::v-deep .el-input__wrapper {
+  // 去掉input白框
+  --el-input-border-color: none !important;
+  // 聚焦时颜色
+  --el-input-focus-border-color: none !important;
+  // hover时颜色
+  --el-input-hover-border-color: none !important;
+}
 .login-container {
   min-height: 100%;
   width: 100%;

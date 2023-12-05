@@ -2,12 +2,6 @@
   height: 100%;
   // 去掉input白色背景
   --el-input-bg-color: transparent !important;
-  // 去掉input白框
-  --el-input-border-color: none !important;
-  // 聚焦时颜色
-  --el-input-focus-border-color: none !important;
-  // hover时颜色
-  --el-input-hover-border-color: none !important;
 }
 
 .el-input__inner {
