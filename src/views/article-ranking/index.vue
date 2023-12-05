@@ -27,10 +27,10 @@
           </template>
           <!-- 操作 -->
           <template v-else-if="item.prop === 'action'" #default="{ row }">
-            <el-button type="primary" size="mini" @click="onShowClick(row)">{{
+            <el-button type="primary" size="small" @click="onShowClick(row)">{{
               $t('msg.article.show')
             }}</el-button>
-            <el-button type="danger" size="mini" @click="onRemoveClick(row)">{{
+            <el-button type="danger" size="small" @click="onRemoveClick(row)">{{
               $t('msg.article.remove')
             }}</el-button>
           </template>

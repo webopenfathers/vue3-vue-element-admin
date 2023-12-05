@@ -7,9 +7,7 @@ import i18n from '@/i18n'
 export const tableRef = ref(null)
 
 export const initSortable = (tableData, cb) => {
-  const el = tableRef.value.$el.querySelector(
-    '.el-table__body-wrapper > table > tbody'
-  )
+  const el = tableRef.value.$el.querySelector('.el-table__body > tbody')
   // 参数一：要拖拽的元素
   // 参数二：配置对象
   Sortable.create(el, {
