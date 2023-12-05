@@ -1,0 +1,21 @@
+.el-input__wrapper {
+  height: 100%;
+  // 去掉input白色背景
+  --el-input-bg-color: transparent !important;
+  // 去掉input白框
+  --el-input-border-color: none !important;
+  // 聚焦时颜色
+  --el-input-focus-border-color: none !important;
+  // hover时颜色
+  --el-input-hover-border-color: none !important;
+}
+
+.el-input__inner {
+  box-shadow: none !important;
+}
+
+// 处理图片灰色底
+
+.el-avatar {
+  --el-avatar-bg-color: none !important;
+}
