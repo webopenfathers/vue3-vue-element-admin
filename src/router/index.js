@@ -54,6 +54,16 @@ export const publicRoutes = [
           icon: 'personnel'
         }
       },
+      {
+        path: '/chart',
+        name: 'chart',
+        component: () =>
+          import(/* webpackChunkName:"chart" */ '@/views/chart/index.vue'),
+        meta: {
+          title: 'chart',
+          icon: 'chart'
+        }
+      },
       // 404
       {
         path: '/404',
