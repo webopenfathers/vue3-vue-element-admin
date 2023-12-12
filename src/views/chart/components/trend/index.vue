@@ -1,9 +1,9 @@
 <template>
   <el-card class="container">
-    <el-row :gutter="32">
+    <el-row :gutter="32" v-if="chartTrendData.allAmount">
       <el-col :span="6">
         <!-- 数据模块 -->
-        <trend-data-vue></trend-data-vue>
+        <trend-data-vue :data="chartTrendData"></trend-data-vue>
       </el-col>
 
       <el-col :span="18">
@@ -16,10 +16,20 @@
 <script setup>
 import trendDataVue from './trend-data.vue'
 import trendChartVue from './trend-chart.vue'
+import { getChartTrend } from '@/api/chart'
+import { ref } from 'vue'
+
+const chartTrendData = ref({})
+
+const getChartTrendData = async () => {
+  const res = await getChartTrend()
+  chartTrendData.value = res
+}
+
+getChartTrendData()
 </script>
 <style lang="scss" scoped>
 .container {
   height: 286px;
-  background-color: #bcbfc3;
 }
 </style>
