@@ -4,7 +4,7 @@
     <div class="title">
       <div class="title-name">{{ $t('msg.chart.trendDataTitle') }}</div>
       <div class="title-amount">
-        &yen;<span>{{ data.allAmount }}</span>
+        &yen; <span ref="titleAmountTarget">{{ data.allAmount }}</span>
       </div>
     </div>
     <!-- 今日新增收益 -->
@@ -13,7 +13,7 @@
         {{ $t('msg.chart.trendDataTadayAdded') }}
       </div>
       <div class="item-amount">
-        <span class="item-amount-number">
+        <span ref="tadayAddedTarget" class="item-amount-number">
           {{ data.tadayAdded }}
         </span>
         {{ $t('msg.chart.unit') }}
@@ -25,7 +25,7 @@
         {{ $t('msg.chart.trendDataTadayExpend') }}
       </div>
       <div class="item-amount">
-        <span class="item-amount-number">
+        <span ref="tadayExpendTarget" class="item-amount-number">
           {{ data.tadaySub }}
         </span>
         {{ $t('msg.chart.unit') }}
@@ -37,7 +37,7 @@
         {{ $t('msg.chart.trendDataTadayBalance') }}
       </div>
       <div class="item-amount">
-        <span class="item-amount-number">
+        <span ref="tadayBalanceTarget" class="item-amount-number">
           {{ data.tadayAmount }}
         </span>
         {{ $t('msg.chart.unit') }}
@@ -46,12 +46,41 @@
   </div>
 </template>
 <script setup>
-import { defineProps } from 'vue'
-defineProps({
+import { defineProps, ref, onMounted } from 'vue'
+import { CountUp } from 'countup.js'
+
+const props = defineProps({
   data: {
     type: Object,
     required: true
   }
+})
+
+// 本月累计收益
+const titleAmountTarget = ref(null)
+// 今日新增收益
+const tadayAddedTarget = ref(null)
+// 今日新增支出
+const tadayExpendTarget = ref(null)
+// 今日结余
+const tadayBalanceTarget = ref(null)
+
+onMounted(() => {
+  const options = {
+    // 显示两位小数
+    decimalPlaces: 2,
+    // 动画持续时间
+    duration: 1.5
+  }
+
+  // 本月累计收益
+  new CountUp(titleAmountTarget.value, props.data.allAmount, options).start()
+  // 今日新增收益
+  new CountUp(tadayAddedTarget.value, props.data.allAmount, options).start()
+  // 今日新增支出
+  new CountUp(tadayExpendTarget.value, props.data.allAmount, options).start()
+  // 今日结余
+  new CountUp(tadayBalanceTarget.value, props.data.allAmount, options).start()
 })
 </script>
 <style scoped lang="scss">
