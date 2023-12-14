@@ -44,7 +44,48 @@ const renderChart = () => {
     legend: {
       data: ['月累计收益', '日收益曲线'],
       // 图例展示位置
-      right: 0
+      left: 'center',
+      top: 0
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {
+          name: '月累计收益'
+        },
+        dataView: {
+          optionToContent: function (opt) {
+            const axisData = opt.xAxis[0].data
+            const series = opt.series
+            let table =
+              '<table style="width:100%;text-align:center"><tbody><tr>' +
+              '<td style="font-size:18px;font-weight:700">时间</td>' +
+              '<td style="font-size:18px;font-weight:700">' +
+              series[0].name +
+              '</td>' +
+              '<td style="font-size:18px;font-weight:700">' +
+              series[1].name +
+              '</td>' +
+              '</tr>'
+            for (let i = 0, l = axisData.length; i < l; i++) {
+              table +=
+                '<tr>' +
+                '<td>' +
+                axisData[i] +
+                '</td>' +
+                '<td>' +
+                series[0].data[i] +
+                '</td>' +
+                '<td>' +
+                series[1].data[i] +
+                '</td>' +
+                '</tr>'
+            }
+            table += '</tbody></table>'
+            return table
+          },
+          readOnly: true
+        }
+      }
     },
     // echarts 网格绘制的位置
     grid: {
