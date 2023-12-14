@@ -8,7 +8,7 @@
 
       <el-col :span="18">
         <!-- 图表模块 -->
-        <trend-chart-vue></trend-chart-vue>
+        <trend-chart-vue :data="chartTrendData"></trend-chart-vue>
       </el-col>
     </el-row>
   </el-card>
