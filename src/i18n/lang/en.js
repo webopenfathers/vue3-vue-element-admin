@@ -184,6 +184,7 @@ export default {
   },
   chart: {
     trendDataTitle: 'Cumulative income of this month (ten thousand yuan)',
+    trendTime: 'time',
     trendDataTadayAdded: 'Income Today',
     trendDataTadayExpend: 'New expenditure today',
     trendDataTadayBalance: 'Balance Today',

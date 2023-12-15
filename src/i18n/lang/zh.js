@@ -183,6 +183,7 @@ export default {
   },
   chart: {
     trendDataTitle: '本月累计收益（万元）',
+    trendTime: '时间',
     trendDataTadayAdded: '今日新增收益',
     trendDataTadayExpend: '今日新增支出',
     trendDataTadayBalance: '今日结余',

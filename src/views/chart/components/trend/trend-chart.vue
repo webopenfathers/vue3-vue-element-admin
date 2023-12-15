@@ -6,7 +6,10 @@
 // 2.导入echarts模块
 import * as echarts from 'echarts'
 import { onMounted, ref, defineProps } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { watchSwitchLang } from '@/utils/i18n'
 
+const i18n = useI18n()
 const props = defineProps({
   data: {
     type: Object,
@@ -42,7 +45,7 @@ const renderChart = () => {
     },
     // 图例配置
     legend: {
-      data: ['月累计收益', '日收益曲线'],
+      data: [i18n.t('msg.chart.monthIncome'), i18n.t('msg.chart.dayIncome')],
       // 图例展示位置
       left: 'center',
       top: 0
@@ -50,7 +53,7 @@ const renderChart = () => {
     toolbox: {
       feature: {
         saveAsImage: {
-          name: '月累计收益'
+          name: i18n.t('msg.chart.monthIncome')
         },
         dataView: {
           optionToContent: function (opt) {
@@ -58,7 +61,9 @@ const renderChart = () => {
             const series = opt.series
             let table =
               '<table style="width:100%;text-align:center"><tbody><tr>' +
-              '<td style="font-size:18px;font-weight:700">时间</td>' +
+              `<td style="font-size:18px;font-weight:700">${i18n.t(
+                'msg.chart.trendTime'
+              )}</td>` +
               '<td style="font-size:18px;font-weight:700">' +
               series[0].name +
               '</td>' +
@@ -119,7 +124,7 @@ const renderChart = () => {
       },
       // 刻度展示文字
       axisLabel: {
-        formatter: '{value} 万元'
+        formatter: `{value} ${i18n.t('msg.chart.unit')}`
       }
     },
     // 图表绘制
@@ -129,13 +134,13 @@ const renderChart = () => {
         // 图表类型
         type: 'bar',
         // 图表的名字,对应图例
-        name: '月累计收益',
+        name: i18n.t('msg.chart.monthIncome'),
         // 柱子的宽度
         barWidth: 20,
         // 提示框的展示内容
         tooltip: {
           valueFormatter: function (value) {
-            return value + '万元'
+            return value + i18n.t('msg.chart.unit')
           }
         },
         // 数据源
@@ -150,11 +155,11 @@ const renderChart = () => {
         // 平滑
         smooth: true,
         // 图表的名字,对应图例
-        name: '日收益曲线',
+        name: i18n.t('msg.chart.dayIncome'),
         // 提示框的展示内容
         tooltip: {
           valueFormatter: function (value) {
-            return value + '万元'
+            return value + i18n.t('msg.chart.unit')
           }
         },
         // 数据源
@@ -170,6 +175,10 @@ const renderChart = () => {
     mChart.resize()
   })
 }
+
+watchSwitchLang(() => {
+  if (mChart) renderChart()
+})
 </script>
 <style scoped lang="scss">
 .trend-chart-container {
