@@ -73,7 +73,7 @@ const calendarItemBgClass = (day) => {
 
 <style lang="scss" scoped>
 .container {
-  height: 443px;
+  height: 460px;
   .calendar {
     ::v-deep .el-calendar__body {
       padding: 0 12px 12px;
