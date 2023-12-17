@@ -4,9 +4,19 @@
       <!-- 具名插槽 -->
       <template #date-cell="{ data }">
         <!-- 展示的内容 -->
-        <p :class="data.isSelected ? 'is-selected' : ''">
+        <p
+          :class="[
+            data.isSelected ? 'is-selected' : '',
+            calendarItemBgClass(data.day)
+          ]"
+        >
           <!-- 显示的内容 -->
           {{ data.day.split('-').slice(2).join('-') }}
+          <br />
+          <!-- 当日金额 -->
+          <span class="amount" v-if="getTadayAmount(data.day)">{{
+            getTadayAmount(data.day)
+          }}</span>
         </p>
       </template>
     </el-calendar>
@@ -14,9 +24,53 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { getChartCalendar } from '@/api/chart'
 
 const currentDate = ref(new Date())
+
+// 获取数据
+const calendarListData = ref([])
+const getCalendarListData = async () => {
+  const { result } = await getChartCalendar()
+  calendarListData.value = result
+}
+getCalendarListData()
+
+// 收益缓存数据
+// key：日期
+// value：金额
+const dateAmountVo = ref({})
+
+// 返回指定日期的收益数据
+const getTadayAmount = (date) => {
+  // 读取缓存
+  if (dateAmountVo.value[date]) return dateAmountVo.value[date]
+
+  const tadayData = calendarListData.value.find((item) => item.date === date)
+  if (!tadayData) return 0
+
+  // 当日金额
+  const tadayAmount = tadayData.amount
+  // 缓存数据
+  dateAmountVo.value[date] = tadayAmount
+
+  return tadayAmount
+}
+
+/**
+ * 返回日历背景
+ */
+const calendarItemBgClass = (day) => {
+  const amount = getTadayAmount(day)
+  if (amount > 0) {
+    return 'profit'
+  } else if (amount < 0) {
+    return 'loss'
+  }
+  return ''
+}
 </script>
+
 <style lang="scss" scoped>
 .container {
   height: 443px;
