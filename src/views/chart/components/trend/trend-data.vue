@@ -76,11 +76,11 @@ onMounted(() => {
   // 本月累计收益
   new CountUp(titleAmountTarget.value, props.data.allAmount, options).start()
   // 今日新增收益
-  new CountUp(tadayAddedTarget.value, props.data.allAmount, options).start()
+  new CountUp(tadayAddedTarget.value, props.data.tadayAdded, options).start()
   // 今日新增支出
-  new CountUp(tadayExpendTarget.value, props.data.allAmount, options).start()
+  new CountUp(tadayExpendTarget.value, props.data.tadaySub, options).start()
   // 今日结余
-  new CountUp(tadayBalanceTarget.value, props.data.allAmount, options).start()
+  new CountUp(tadayBalanceTarget.value, props.data.tadayAmount, options).start()
 })
 </script>
 <style scoped lang="scss">
