@@ -8,6 +8,9 @@ import { getChartTimeAmount } from '@/api/chart'
 import { onMounted, ref } from 'vue'
 import * as echarts from 'echarts'
 import { useI18n } from 'vue-i18n'
+import { watchSwitchLang } from '@/utils/i18n'
+import emitter from '@/utils/eventHub'
+
 const i18n = useI18n()
 
 // 获取数据
@@ -18,7 +21,7 @@ const getData = async (date) => {
   renderChart()
 }
 
-getData({ date: '2022-08-12' })
+getData({ date: new Date() })
 
 // 图表初始化
 const target = ref(null)
@@ -113,6 +116,19 @@ const renderChart = () => {
     mChart.resize()
   })
 }
+
+/**
+ * 日历图联动
+ */
+emitter.on('calendarChange', (val) => {
+  console.log(val)
+  getData({ date: val })
+})
+
+// 国际化切换
+watchSwitchLang(() => {
+  if (mChart) renderChart()
+})
 </script>
 <style lang="scss" scoped>
 .container {

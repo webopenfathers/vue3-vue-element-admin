@@ -23,8 +23,9 @@
   </el-card>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { getChartCalendar } from '@/api/chart'
+import emitter from '@/utils/eventHub'
 
 const currentDate = ref(new Date())
 
@@ -69,6 +70,13 @@ const calendarItemBgClass = (day) => {
   }
   return ''
 }
+
+/**
+ * 监听日期的变化
+ */
+watch(currentDate, (val) => {
+  emitter.emit('calendarChange', val)
+})
 </script>
 
 <style lang="scss" scoped>
