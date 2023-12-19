@@ -27,3 +27,12 @@ export const getChartTimeAmount = (params) => {
     params
   })
 }
+
+/**
+ * 大区饼图
+ */
+export const getChartPie = () => {
+  return request({
+    url: '/chart/pie'
+  })
+}
