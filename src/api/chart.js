@@ -45,3 +45,12 @@ export const getChartWordCloud = () => {
     url: '/chart/wordcloud'
   })
 }
+
+/**
+ * 地图可视化
+ */
+export const getChartMap = () => {
+  return request({
+    url: '/chart/bmap'
+  })
+}
