@@ -100,7 +100,7 @@ const renderBMap = () => {
             .sort((a, b) => {
               return b.value - a.value
             })
-            .slice(0, 6)
+            .slice(0, 5)
         ),
         // 散点大小
         symbolSize: (val) => {
