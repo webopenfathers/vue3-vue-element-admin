@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="18">
-      <s2-vue></s2-vue>
+      <s2-vue :data="sheetData"></s2-vue>
     </el-col>
     <el-col :span="6">
       <sheet-label-vue
@@ -19,7 +19,7 @@
 import s2Vue from './components/s2.vue'
 import sheetLabelVue from './components/sheet-label.vue'
 import { watchSwitchLang } from '@/utils/i18n'
-import { getChartRegions } from '@/api/chart'
+import { getChartRegions, getChartSheet } from '@/api/chart'
 import { ref } from 'vue'
 
 /**
@@ -30,6 +30,7 @@ const regionsData = ref([])
 const getChartRegionsData = async () => {
   const { regions } = await getChartRegions()
   regionsData.value = regions
+  getChartSheetData(regionsData.value[0].id)
 }
 
 watchSwitchLang(getChartRegionsData)
@@ -38,6 +39,15 @@ watchSwitchLang(getChartRegionsData)
 const currentIndex = ref(0)
 const onChangeIndex = (index) => {
   currentIndex.value = index
+}
+
+/**
+ * 大区对应的表格数据
+ */
+const sheetData = ref([])
+const getChartSheetData = async (id) => {
+  const res = await getChartSheet(id)
+  sheetData.value = res
 }
 </script>
 <style lang="scss" scoped>
