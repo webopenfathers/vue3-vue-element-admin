@@ -5,8 +5,11 @@
     </el-col>
     <el-col :span="6">
       <sheet-label-vue
-        v-for="item in 6"
-        :key="item"
+        v-for="(item, index) in regionsData"
+        :key="item.id"
+        :data="item"
+        :isSelected="currentIndex === index"
+        @click="onChangeIndex(index)"
         class="mb-20"
       ></sheet-label-vue>
     </el-col>
@@ -15,6 +18,27 @@
 <script setup>
 import s2Vue from './components/s2.vue'
 import sheetLabelVue from './components/sheet-label.vue'
+import { watchSwitchLang } from '@/utils/i18n'
+import { getChartRegions } from '@/api/chart'
+import { ref } from 'vue'
+
+/**
+ * 获取大区数据
+ */
+const regionsData = ref([])
+
+const getChartRegionsData = async () => {
+  const { regions } = await getChartRegions()
+  regionsData.value = regions
+}
+
+watchSwitchLang(getChartRegionsData)
+
+// 选中
+const currentIndex = ref(0)
+const onChangeIndex = (index) => {
+  currentIndex.value = index
+}
 </script>
 <style lang="scss" scoped>
 .mb-20 {
