@@ -39,6 +39,8 @@ watchSwitchLang(getChartRegionsData)
 const currentIndex = ref(0)
 const onChangeIndex = (index) => {
   currentIndex.value = index
+  // 切换大区时重新获取表格数据
+  getChartSheetData(regionsData.value[currentIndex.value].id)
 }
 
 /**
